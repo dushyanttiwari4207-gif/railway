@@ -1,0 +1,626 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f4f6f8;
+
+    color: #222;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    background: #1d3557;
+
+    color: white;
+
+    padding: 18px 20px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+}
+
+
+/* LOGO + TITLE */
+
+.header-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.railway-logo {
+
+    width: 70px;
+
+    height: 70px;
+
+    object-fit: contain;
+
+}
+
+
+.header-top h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+}
+
+
+.header-top p {
+
+    margin: 6px 0 0;
+
+    text-align: center;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+}
+
+
+nav a {
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 10px 15px;
+
+    border-radius: 5px;
+
+    transition: 0.3s;
+
+}
+
+
+nav a:hover {
+
+    background: #457b9d;
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+#home {
+    min-height: 650px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.48),
+            rgba(0, 0, 0, 0.48)
+        ),
+        url("vande-bharat.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+}
+
+
+/* HOME TEXT */
+
+.home-overlay {
+
+    padding: 40px;
+
+}
+
+
+.home-overlay h2 {
+
+    font-size: 46px;
+
+    margin-bottom: 15px;
+
+    text-shadow:
+        2px 2px 5px black;
+
+}
+
+
+.home-overlay p {
+
+    font-size: 22px;
+
+    margin-bottom: 30px;
+
+    text-shadow:
+        2px 2px 4px black;
+
+}
+
+
+.home-overlay button {
+
+    padding: 14px 28px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #1d3557;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+}
+
+
+.home-overlay button:hover {
+
+    background: #457b9d;
+
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.page-section {
+
+    padding: 60px 20px;
+
+}
+
+
+.page-section h2 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+    max-width: 800px;
+
+    margin: auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+form {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+label {
+
+    margin-top: 15px;
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    font-size: 15px;
+
+}
+
+
+input:focus,
+select:focus {
+
+    outline: none;
+
+    border-color: #1d3557;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.submit-button {
+
+    margin-top: 20px;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #1d3557;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+.submit-button:hover {
+
+    background: #457b9d;
+
+}
+
+
+/* =========================
+   BOOKING RESULT
+========================= */
+
+#bookingResult {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+}
+
+
+/* CONFIRMATION */
+
+.confirmation-box {
+
+    padding: 25px;
+
+    margin-top: 20px;
+
+    border-radius: 12px;
+
+    background: #f0fff4;
+
+    border: 2px solid #28a745;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.confirmation-box h2 {
+
+    margin-top: 0;
+
+    color: #218838;
+
+    text-align: left;
+
+}
+
+
+.confirmation-box p {
+
+    line-height: 1.6;
+
+}
+
+
+.confirmation-details {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+
+    overflow-x: auto;
+
+}
+
+
+.confirmation-details pre {
+
+    margin: 0;
+
+    white-space: pre-wrap;
+
+    font-family: monospace;
+
+    line-height: 1.7;
+
+}
+
+
+.success-message {
+
+    margin-top: 20px;
+
+    font-weight: bold;
+
+    color: #218838;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-box {
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    background: #f5f5f5;
+
+    text-align: center;
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error-box {
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    background: #fff5f5;
+
+    border: 2px solid #dc3545;
+
+    color: #b02a37;
+
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result-box {
+
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 10px;
+
+    background: white;
+
+    border: 1px solid #ddd;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.result-box h3 {
+
+    margin-top: 0;
+
+}
+
+
+.result-box pre {
+
+    white-space: pre-wrap;
+
+    line-height: 1.7;
+
+    font-family: monospace;
+
+}
+
+
+/* =========================
+   SCHEDULE
+========================= */
+
+.schedule-output {
+
+    white-space: pre-wrap;
+
+    text-align: left;
+
+    margin: 0;
+
+    line-height: 1.7;
+
+    font-family: monospace;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    background: #1d3557;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+
+    margin-top: 40px;
+
+}
+
+
+footer h3 {
+
+    margin-top: 0;
+
+}
+
+
+footer p {
+
+    margin-bottom: 0;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .header-top {
+
+        flex-direction: column;
+
+    }
+
+
+    .header-top h1 {
+
+        font-size: 22px;
+
+        text-align: center;
+
+    }
+
+
+    nav {
+
+        flex-direction: column;
+
+    }
+
+
+    nav a {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+
+    .home-overlay h2 {
+
+        font-size: 30px;
+
+    }
+
+
+    .home-overlay p {
+
+        font-size: 18px;
+
+    }
+
+
+    .container {
+
+        padding: 20px;
+
+    }
+
+}
