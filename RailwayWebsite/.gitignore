@@ -1,0 +1,10 @@
+# Java generated files
+*.class
+
+# VS Code temporary files
+tempCodeRunnerFile.java
+
+# IDE / OS files
+.vscode/
+.DS_Store
+Thumbs.db
