@@ -1,7 +1,11 @@
-#include<stdio.h>
-#include<string.h>
-#include<time.h>
-struct passenger{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define DATA_FILE "Railway.dat"
+
+struct passenger {
     char name[100];
     int age;
     char gender[100];
@@ -15,216 +19,268 @@ struct passenger{
     int pnr;
     int seatNo;
 };
-void booking();
-void reserved();
-void search();
-void schedule();
 
-int main(){
-    int a;
-    printf("=========================================================\n");
-    printf("                        INDIAN RAILWAYS                             \n");
-    printf("=========================================================\n");
+void booking(void);
+void reserved(void);
+void search(void);
+void schedule(void);
 
-    printf("1. Book Ticket \n");
-    printf("2. View Reserved Tickets \n");
-    printf("3. Search Reservation \n");
-    printf("4. Train Schedule \n");
+int main(void) {
+    int choice;
+
+    srand((unsigned int)time(NULL));
+
+    printf("=========================================================\n");
+    printf("                    INDIAN RAILWAYS\n");
+    printf("=========================================================\n");
+    printf("1. Book Ticket\n");
+    printf("2. View Reserved Tickets\n");
+    printf("3. Search Reservation\n");
+    printf("4. Train Schedule\n");
     printf("Enter your choice:");
-    scanf("%d",&a);
-    if(a>=5  |  a<=0){
-        printf("choice must be in between 1-4");
-    }
-    if(a==1){
-        srand(time(NULL));
-        booking();
 
-        
+    if (scanf("%d", &choice) != 1) {
+        printf("Invalid choice.\n");
+        return 1;
     }
-    else if(a==2){
+
+    if (choice < 1 || choice > 4) {
+        printf("Choice must be between 1 and 4.\n");
+        return 1;
+    }
+
+    if (choice == 1) {
+        booking();
+    } else if (choice == 2) {
         reserved();
-    }
-    else if(a==3){
+    } else if (choice == 3) {
         search();
-    }
-    else if(a==4){
-        srand(time(NULL));
+    } else {
         schedule();
     }
+
     return 0;
 }
-void booking(){
-    char pname[50];
-    char pgender[50];
+
+void booking(void) {
     struct passenger p1;
+    FILE *file;
 
-    printf("enter name:");
-    scanf(" %49[^\n]",&pname);
-    strcpy(p1.name,pname);
+    memset(&p1, 0, sizeof(p1));
 
-    printf("enter age:");
-    scanf("%d",&p1.age);
+    printf("Enter name:");
+    scanf(" %99[^\n]", p1.name);
 
-    printf("enter gender:");
-    scanf(" %49[^\n]",&pgender);
-    strcpy(p1.gender,pgender);
+    printf("Enter age:");
+    if (scanf("%d", &p1.age) != 1) {
+        printf("Invalid age.\n");
+        return;
+    }
 
-    printf("enter train number:");
-    scanf("%d",&p1.tnumber);
+    printf("Enter gender:");
+    scanf(" %99[^\n]", p1.gender);
 
-    char trname[50],psource[50],pdestination[50],tdate[50];
+    printf("Enter train number:");
+    if (scanf("%d", &p1.tnumber) != 1) {
+        printf("Invalid train number.\n");
+        return;
+    }
 
-    printf("enter Train name:");
-    scanf(" %49[^\n]",&trname);
-    strcpy(p1.tname,trname);
+    printf("Enter Train name:");
+    scanf(" %99[^\n]", p1.tname);
 
-    printf("enter source:");
-    scanf(" %49[^\n]",&psource);
-    strcpy(p1.source,psource);
+    printf("Enter source:");
+    scanf(" %99[^\n]", p1.source);
 
+    printf("Enter destination:");
+    scanf(" %99[^\n]", p1.destination);
 
-    printf("enter destination:");
-    scanf(" %49[^\n]",&pdestination);
-    strcpy(p1.destination,pdestination);
+    printf("Enter date:");
+    scanf(" %99[^\n]", p1.date);
 
-    printf("enter date:");
-    scanf(" %49[^\n]",&tdate);
-    strcpy(p1.date,tdate);
+    printf("Enter class:");
+    scanf(" %99[^\n]", p1.class);
 
-    char pclass[50],ppreference[50];
+    printf("Enter preference:");
+    scanf(" %99[^\n]", p1.preference);
 
-    printf("enter class:");
-    scanf(" %49[^\n]",&pclass);
-    strcpy(p1.class,pclass);
+    p1.pnr = rand() % 900000 + 800000;
+    p1.seatNo = rand() % 72 + 1;
 
+    printf("------------------------------------------------\n");
+    printf("Passenger name            : %s\n", p1.name);
+    printf("Passenger age             : %d\n", p1.age);
+    printf("Passenger gender          : %s\n", p1.gender);
+    printf("Train number              : %d\n", p1.tnumber);
+    printf("Train name                : %s\n", p1.tname);
+    printf("Source                    : %s\n", p1.source);
+    printf("Destination               : %s\n", p1.destination);
+    printf("Traveling date            : %s\n", p1.date);
+    printf("Class                     : %s\n", p1.class);
+    printf("Seat preference           : %s\n", p1.preference);
+    printf("------------------------------------------------\n");
+    printf("Booking confirmed!!\n");
+    printf("PNR Number                : %d\n", p1.pnr);
+    printf("Coach                     : B2\n");
+    printf("Seat Number               : %d\n", p1.seatNo);
+    printf("Status                    : Confirmed\n");
 
-    printf("enter preference:");
-    scanf(" %49[^\n]",&ppreference);
-    strcpy(p1.preference,ppreference);
+    file = fopen(DATA_FILE, "ab");
+    if (file == NULL) {
+        perror("Unable to open Railway.dat");
+        return;
+    }
+
+    if (fwrite(&p1, sizeof(p1), 1, file) != 1) {
+        perror("Unable to save booking");
+    }
+
+    fclose(file);
+}
+
+void reserved(void) {
+    struct passenger p1;
+    FILE *file = fopen(DATA_FILE, "rb");
+    int count = 0;
+
+    if (file == NULL) {
+        printf("No reservations found.\n");
+        return;
+    }
 
     printf("------------------------------------------------\n");
 
-    printf("Passenger name            :%s\n",p1.name);
-    printf("Passenger age             :%d\n",p1.age);
-    printf("Passenger gender          :%s\n",p1.gender);
-    printf("Train number              :%d\n",p1.tnumber);
-    printf("Train name                :%s\n",p1.tname);
-    printf("Source                    :%s\n",p1.source);
-    printf("Destination               :%s\n",p1.destination);
-    printf("traveling date            :%s\n",p1.date);
-    printf("class                     :%s\n",p1.class);
-    printf("seat preference           :%s\n",p1.preference);
-    
-    
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf("Booking confirmed!!\n");
-    printf("----------------------------------------------------------------\n"); 
+    while (fread(&p1, sizeof(p1), 1, file) == 1) {
+        count++;
 
-    int pnr,seatNo;
-    pnr = rand() % 900000 + 800000;
-    seatNo = rand() % 72 + 1; 
-    p1.pnr=pnr;
-    p1.seatNo=seatNo;
-    printf("PNR Number  : %d\n", pnr);
-    printf("coach       : B2\n");
-    printf("Seat Number : %d\n", seatNo);
-    printf("Status      : Confirmed\n");
+        printf("Passenger name            : %s\n", p1.name);
+        printf("Passenger PNR             : %d\n", p1.pnr);
+        printf("Passenger age             : %d\n", p1.age);
+        printf("Passenger gender          : %s\n", p1.gender);
+        printf("Train number              : %d\n", p1.tnumber);
+        printf("Train name                : %s\n", p1.tname);
+        printf("Source                    : %s\n", p1.source);
+        printf("Destination               : %s\n", p1.destination);
+        printf("Traveling date            : %s\n", p1.date);
+        printf("Class                     : %s\n", p1.class);
+        printf("Seat preference           : %s\n", p1.preference);
+        printf("Coach                     : B2\n");
+        printf("Seat number               : %d\n", p1.seatNo);
+        printf("Status                    : Confirmed\n");
+        printf("------------------------------------------------\n");
+    }
 
-    FILE *fptr;
-    fptr=fopen("Railway.dat","ab");
-    fwrite(&p1,sizeof(p1),1,fptr);
-    fclose(fptr);
+    if (count == 0) {
+        printf("No reservations found.\n");
+    }
 
-
-
+    fclose(file);
 }
 
-void reserved(){
+void search(void) {
     struct passenger p1;
-    FILE *fptr;
-    printf("----------------------------------------------------------------\n");
-    fptr=fopen("Railway.dat","rb");
+    FILE *file;
     int pnr;
-    p1.pnr=pnr;
-    
+    int found = 0;
 
-
-    while(fread(&p1,sizeof(struct passenger),1,fptr)==1){
-        
-        printf("Passenger name            :%s\n",p1.name);
-        printf("Passenger PNR             :%d\n",p1.pnr);
-        printf("Passenger age             :%d\n",p1.age);
-        printf("Passenger gender          :%s\n",p1.gender);
-        printf("Train number              :%d\n",p1.tnumber);
-        printf("Train name                :%s\n",p1.tname);
-        printf("Source                    :%s\n",p1.source);
-        printf("Destination               :%s\n",p1.destination);
-        printf("traveling date            :%s\n",p1.date);
-        printf("class                     :%s\n",p1.class);
-        printf("seat preference           :%s\n",p1.preference);
-        printf("----------------------------------------------------------------\n");
-        
-    }
-    fclose(fptr);
-    
-    
-}
-
-
-void search(){
-    struct passenger p1;
-    int c,x;
     printf("Enter PNR:");
-    scanf("%d",&c);
-
-    FILE *fptr;
-    fptr=fopen("Railway.dat","rb");
-    
-    
-    while(fread(&p1,sizeof(struct passenger),1,fptr)==1){
-
-        
-        if(p1.pnr==c){
-        printf("Booking found!\n");
-        printf("-----------------------------------------------------\n");
-        printf("Name                 :%s\n",p1.name);
-        printf("Train Number         :%d\n",p1.tnumber);
-        printf("Train Name           :%s\n",p1.tname);
-        printf("Date                 :%s\n",p1.date);
-        printf("coach                :B2\n");    
-        printf("Seat number          :%d\n",p1.seatNo);
-        printf("Status               :Confirmed!\n");
-        x=c;
-        break;
-        }
-
+    if (scanf("%d", &pnr) != 1) {
+        printf("Invalid PNR.\n");
+        return;
     }
-    if(x!=c){
-            printf("NO DATA FOUND!!!!\n");
-        }
-    fclose(fptr);
 
+    file = fopen(DATA_FILE, "rb");
+    if (file == NULL) {
+        printf("NO DATA FOUND!!!!\n");
+        return;
+    }
+
+    while (fread(&p1, sizeof(p1), 1, file) == 1) {
+        if (p1.pnr == pnr) {
+            found = 1;
+
+            printf("Booking found!\n");
+            printf("-----------------------------------------------------\n");
+            printf("Name                 : %s\n", p1.name);
+            printf("Train Number         : %d\n", p1.tnumber);
+            printf("Train Name           : %s\n", p1.tname);
+            printf("Source               : %s\n", p1.source);
+            printf("Destination          : %s\n", p1.destination);
+            printf("Date                 : %s\n", p1.date);
+            printf("Class                : %s\n", p1.class);
+            printf("Coach                : B2\n");
+            printf("Seat number          : %d\n", p1.seatNo);
+            printf("Status               : Confirmed!\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("NO DATA FOUND!!!!\n");
+    }
+
+    fclose(file);
 }
 
-void schedule(){
+void schedule(void) {
     struct passenger p1;
-    FILE *fptr;
-    fptr=fopen("Railway.dat","rb");
-    printf("----------------------------TRAIN SCHEDULE-----------------------------------------------------------\n");
-    printf("Train No          Train name                            Departure               Arrival\n");
-    while(fread(&p1,sizeof(struct passenger),1,fptr)==1){
-        int dephour = rand() % 24;    // 0 to 23
-        int depminute = rand() % 60;  // 0 to 59
-        int arrhour=(dephour+4)%24;
-        int arrmin=(depminute+4)%60;
-        
+    FILE *file = fopen(DATA_FILE, "rb");
+    int displayedTrainNumbers[1000];
+    int displayedCount = 0;
+    int found = 0;
 
-        printf("%d             %-20s                  %02d:%02d                   %02d:%02d\n",p1.tnumber,p1.tname,dephour,depminute,arrhour,arrmin);
+    if (file == NULL) {
+        printf("No train schedule data found.\n");
+        return;
     }
-    printf("-----------------------------------------------------------------------------------------------------\n");
-    fclose(fptr);
 
+    printf("---------------------------- TRAIN SCHEDULE ----------------------------\n");
+    printf("%-12s %-30s %-15s %-15s\n",
+           "Train No", "Train Name", "Departure", "Arrival");
+    printf("------------------------------------------------------------------------\n");
 
+    while (fread(&p1, sizeof(p1), 1, file) == 1) {
+        int alreadyDisplayed = 0;
+        int i;
+
+        for (i = 0; i < displayedCount; i++) {
+            if (displayedTrainNumbers[i] == p1.tnumber) {
+                alreadyDisplayed = 1;
+                break;
+            }
+        }
+
+        if (alreadyDisplayed) {
+            continue;
+        }
+
+        if (displayedCount < 1000) {
+            displayedTrainNumbers[displayedCount++] = p1.tnumber;
+        }
+
+        {
+            int depHour = abs(p1.tnumber) % 24;
+            int depMinute = abs(p1.tnumber) % 60;
+            int totalMinutes = depHour * 60 + depMinute + 240;
+            int arrHour = (totalMinutes / 60) % 24;
+            int arrMinute = totalMinutes % 60;
+
+            printf("%-12d %-30s %02d:%02d          %02d:%02d\n",
+                   p1.tnumber,
+                   p1.tname,
+                   depHour,
+                   depMinute,
+                   arrHour,
+                   arrMinute);
+        }
+
+        found = 1;
+    }
+
+    if (!found) {
+        printf("No train schedule data found.\n");
+    }
+
+    printf("------------------------------------------------------------------------\n");
+    fclose(file);
 }
